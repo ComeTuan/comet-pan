@@ -32,7 +32,7 @@ const routes = [
                 component: () => import('../views/manager/AdminPerson')
             },
             {
-                path: 'password',
+                path: 'Password',
                 name: 'Password',
                 meta: {name: '修改密码'},
                 component: () => import('../views/manager/Password')
@@ -42,6 +42,12 @@ const routes = [
                 name: 'Notice',
                 meta: {name: '公告信息'},
                 component: () => import('../views/manager/Notice')
+            },
+            {
+                path: 'Files',
+                name: 'Files',
+                meta: {name: '文件信息'},
+                component: () => import('../views/manager/Files')
             },
         ]
     },
@@ -62,7 +68,7 @@ const routes = [
             {path: 'trash', name: 'trash', meta: {name: '回收站'}, component: () => import('../views/front/trash')},
             // { path: 'upload', name: 'upload', meta: { name: '上传文件' }, component: () => import('../views/front/uploader') },
             {path: 'share', name: 'share', meta: {name: '我的分享'}, component: () => import('../views/front/share')},
-            {path: 'group', name: 'group', meta: {name: '我的群组'}, component: () => import('../views/front/group')},
+            {path: 'message', name: 'message', meta: {name: '我的消息'}, component: () => import('../views/front/message')},
 
         ]
     },

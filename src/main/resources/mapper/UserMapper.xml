@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.nomelin.cometpan.dao.UserMapper">
+<mapper namespace="top.nomelin.cometpan.mapper.UserMapper">
     <select id="selectAll" parameterType="User" resultType="User">
         select id, name, user_name, password, avatar, role, phone, email, used_space, root_id
         from user

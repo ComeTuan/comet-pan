@@ -14,4 +14,6 @@ public interface DiskService {
     void decDiskCount(int diskId);
 
     void incDiskCount(int diskId);
+
+    String getDiskUrl(int diskId);
 }

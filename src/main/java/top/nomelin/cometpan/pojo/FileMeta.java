@@ -2,11 +2,7 @@ package top.nomelin.cometpan.pojo;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
-/**
- * 文件元数据
- *
- * @author nomelin
- */
+
 public class FileMeta {
     /**
      * ID

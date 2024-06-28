@@ -3,7 +3,7 @@
     <!--  头部  -->
     <div class="manager-header">
       <div class="manager-header-left">
-        <img class="logo" src="@/assets/imgs/logo.svg" />
+        <img class="logo" src="@/assets/imgs/logowitte.png" />
       </div>
 
       <div class="manager-header-center">
@@ -21,7 +21,7 @@
           </div>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="goToPerson">个人信息</el-dropdown-item>
-            <el-dropdown-item @click.native="$router.push('/password')">修改密码</el-dropdown-item>
+            <el-dropdown-item @click.native="$router.push('/Manager/Password')">修改密码</el-dropdown-item>
             <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -32,7 +32,7 @@
     <div class="manager-main">
       <!--  侧边栏  -->
       <div class="manager-main-left">
-        <el-menu :default-openeds="['info', 'user']" router style="border: none" :default-active="$route.path">
+        <el-menu :default-openeds="['info', 'user','files']" router style="border: none" :default-active="$route.path">
           <el-menu-item index="/manager/home">
             <i class="el-icon-s-home"></i>
             <span slot="title">系统首页</span>
@@ -49,6 +49,12 @@
               <i class="el-icon-menu"></i><span>用户管理</span>
             </template>
             <el-menu-item index="/manager/admin">管理员信息</el-menu-item>
+          </el-submenu>
+          <el-submenu index="files">
+            <template slot="title">
+              <i class="el-icon-menu"></i><span>文件管理</span>
+            </template>
+            <el-menu-item index="/manager/Files">文件信息</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>
@@ -83,8 +89,9 @@ export default {
       this.user = getItemWithExpiry("user")   // 重新获取下用户的最新信息
     },
     goToPerson() {
+      console.log(this.user.role)
       if (this.user.role === 1) {
-        this.$router.push('/adminPerson')
+        this.$router.push('/manager/adminPerson')
       }
     },
     logout() {
@@ -98,7 +105,6 @@ export default {
 <style scoped>
 @import "@/assets/css/manager.css";
 .logo{
-  width: 150px;
-  margin-top: 20px;
+  width: 168px;
 }
 </style>

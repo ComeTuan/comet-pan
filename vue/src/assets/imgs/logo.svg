@@ -1,1 +1,75 @@
-<svg id="图层_1" data-name="图层 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 165.29 49.7"><defs><style>.cls-1,.cls-2{fill:none;stroke-linecap:round;stroke-linejoin:round;}.cls-1{stroke:#222;stroke-width:4.16px;}.cls-2{stroke:#ff5745;stroke-width:3.2px;}.cls-3{fill:#222;fill-rule:evenodd;}.cls-4{font-size:34.73px;fill:#151515;font-family:Sarasa-Mono-SC-Bold, Sarasa Mono SC;font-weight:700;}</style></defs><path class="cls-1" d="M17,26.34A12.87,12.87,0,0,1,29.8,13.4,11.93,11.93,0,0,1,41.72,25.6" transform="translate(-10.12 -9.76)"/><path class="cls-2" d="M40.2,26.34a7.28,7.28,0,0,1,0,14.56" transform="translate(-10.12 -9.76)"/><path class="cls-1" d="M21.1,40.9H19.4a7.24,7.24,0,0,1-7.2-7.28,7.39,7.39,0,0,1,.45-2.55,7.91,7.91,0,0,1,4.65-4.41,9,9,0,0,1,9.25,2.5M21.32,40.9c2.84-.27,5.62-2.9,6.85-4.58,1.39-1.92,2.86-3.8,4.38-5.62,2-2.41,4.36-4.36,7.65-4.36a7.28,7.28,0,0,1,0,14.56" transform="translate(-10.12 -9.76)"/><path class="cls-3" d="M20.2,40.4v1A1.6,1.6,0,0,0,21.8,43H40.2V38.79H21.8A1.61,1.61,0,0,0,20.2,40.4Z" transform="translate(-10.12 -9.76)"/><text class="cls-4" transform="translate(45.41 30.56) scale(0.86 1)">彗星网盘</text></svg>
+<svg width="199.000000" height="67.000000" viewBox="0 0 199 67" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<filter id="filter_2_1_dd" x="0.000000" y="0.000000" width="199.000000" height="67.000000" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="0" dy="4"/>
+			<feGaussianBlur stdDeviation="1.33333"/>
+			<feComposite in2="hardAlpha" operator="out" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+			<feBlend mode="normal" in2="BackgroundImageFix" result="effect_dropShadow_1"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="effect_dropShadow_1" result="shape"/>
+		</filter>
+		<filter id="filter_2_2_dd" x="8.883896" y="1.215225" width="36.779175" height="23.429169" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="1" dy="1"/>
+			<feGaussianBlur stdDeviation="0.666667"/>
+			<feComposite in2="hardAlpha" operator="out" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/>
+			<feBlend mode="normal" in2="BackgroundImageFix" result="effect_dropShadow_1"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="effect_dropShadow_1" result="shape"/>
+		</filter>
+		<filter id="filter_2_4_dd" x="3.407639" y="16.465897" width="49.839996" height="25.279819" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="1" dy="1"/>
+			<feGaussianBlur stdDeviation="0.666667"/>
+			<feComposite in2="hardAlpha" operator="out" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/>
+			<feBlend mode="normal" in2="BackgroundImageFix" result="effect_dropShadow_1"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="effect_dropShadow_1" result="shape"/>
+		</filter>
+		<filter id="filter_2_6_dd" x="58.583519" y="5.699654" width="139.231628" height="35.982800" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+			<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+			<feOffset dx="2" dy="2"/>
+			<feGaussianBlur stdDeviation="0.666667"/>
+			<feComposite in2="hardAlpha" operator="out" k2="-1" k3="1"/>
+			<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+			<feBlend mode="normal" in2="BackgroundImageFix" result="effect_dropShadow_1"/>
+			<feBlend mode="normal" in="SourceGraphic" in2="effect_dropShadow_1" result="shape"/>
+		</filter>
+		<clipPath id="clip2_1">
+			<rect id="logo" width="191.000000" height="59.000000" transform="translate(4.000000 0.000000)" fill="white" fill-opacity="0"/>
+		</clipPath>
+		<linearGradient x1="-10.000000" y1="36.500000" x2="49.499989" y2="-0.000023" id="paint_linear_2_2_0" gradientUnits="userSpaceOnUse">
+			<stop stop-color="#AD00FE"/>
+			<stop offset="1.000000" stop-color="#00E0EE"/>
+		</linearGradient>
+		<linearGradient x1="-16.999947" y1="50.500008" x2="56.500000" y2="13.000008" id="paint_linear_2_4_0" gradientUnits="userSpaceOnUse">
+			<stop stop-color="#AD00FE"/>
+			<stop offset="1.000000" stop-color="#00E0EE"/>
+		</linearGradient>
+		<linearGradient x1="19.999760" y1="64.000023" x2="209.000000" y2="2.999992" id="paint_linear_2_6_0" gradientUnits="userSpaceOnUse">
+			<stop stop-color="#AD00FE"/>
+			<stop offset="1.000000" stop-color="#00E0EE"/>
+		</linearGradient>
+	</defs>
+	<g filter="url(#filter_2_1_dd)">
+		<g clip-path="url(#clip2_1)">
+			<g filter="url(#filter_2_2_dd)">
+				<path id="path" d="M11.96 19.56C11.95 17.55 12.32 15.61 13.06 13.74C13.81 11.88 14.88 10.23 16.27 8.8C17.65 7.36 19.26 6.26 21.08 5.48C22.9 4.7 24.8 4.3 26.78 4.29C28.63 4.29 30.42 4.66 32.13 5.39C33.84 6.13 35.35 7.18 36.65 8.53C37.94 9.88 38.93 11.44 39.62 13.2C40.3 14.97 40.62 16.79 40.57 18.69" stroke="url(#paint_linear_2_2_0)" stroke-opacity="1.000000" stroke-width="4.160000" stroke-linejoin="round" stroke-linecap="round"/>
+			</g>
+			<g filter="url(#filter_2_4_dd)" style="mix-blend-mode:normal">
+				<path id="path" d="M16.96 36.74L14.94 36.74C13.8 36.73 12.71 36.51 11.66 36.07C10.61 35.63 9.68 35.01 8.88 34.2C8.08 33.4 7.47 32.47 7.04 31.42C6.61 30.37 6.4 29.28 6.4 28.15C6.4 27.12 6.58 26.11 6.94 25.14C8 22.6 9.84 20.86 12.45 19.94C14.41 19.34 16.38 19.31 18.36 19.84C20.34 20.37 22.03 21.39 23.42 22.89M17.22 36.74C20.59 36.42 23.88 33.32 25.34 31.34C26.99 29.07 28.73 26.85 30.54 24.7C32.91 21.86 35.71 19.56 39.61 19.56C40.75 19.56 41.86 19.78 42.91 20.21C43.97 20.65 44.9 21.27 45.71 22.08C46.52 22.88 47.15 23.81 47.59 24.86C48.02 25.91 48.24 27.01 48.24 28.15C48.24 29.29 48.02 30.38 47.59 31.44C47.15 32.49 46.52 33.42 45.71 34.22C44.9 35.03 43.97 35.65 42.91 36.09C41.86 36.52 40.75 36.74 39.61 36.74" stroke="url(#paint_linear_2_4_0)" stroke-opacity="1.000000" stroke-width="4.000000"/>
+			</g>
+			<g filter="url(#filter_2_6_dd)">
+				<path id="彗星网盘" d="M188.95 8.65L188.95 16.01L193.81 16.01L193.81 18.3L188.95 18.3L188.95 22.36C188.95 23.64 188.67 24.27 187.74 24.65C186.8 25.04 185.27 25.04 182.94 25.04C182.84 24.37 182.46 23.48 182.11 22.85C183.81 22.88 185.37 22.88 185.79 22.88C186.28 22.85 186.42 22.75 186.42 22.33L186.42 18.3L170.44 18.3C169.88 21.11 168.49 23.96 165.34 26.04C164.96 25.53 163.98 24.59 163.46 24.2C166.1 22.53 167.35 20.46 167.84 18.3L162.66 18.3L162.66 16.01L168.19 16.01C168.22 15.52 168.22 15.11 168.22 14.66L168.22 8.65L175.72 8.65C176.17 7.7 176.66 6.49 176.87 5.69L179.64 6.25C179.23 7.09 178.85 7.92 178.5 8.65L188.95 8.65ZM67.18 22.64L64.73 22.64L64.73 19.83L58.58 19.83L58.58 17.85L64.73 17.85L64.73 15.21L59.96 15.21L59.96 13.27L64.73 13.27L64.73 10.66L59.13 10.66L59.13 8.68L64.73 8.68L64.73 6.04L67.18 6.04L67.18 8.68L72.19 8.68L72.19 10.66L67.18 10.66L67.18 13.27L71.64 13.27L71.64 15.21L67.18 15.21L67.18 17.85L72.57 17.85L72.57 19.83L67.18 19.83L67.18 22.64ZM82.78 15.17L82.78 17.88L89.1 17.88L89.1 19.86L82.78 19.86L82.78 22.64L80.32 22.64L80.32 19.86L73.93 19.86L73.93 17.88L80.32 17.88L80.32 15.17L74.97 15.17L74.97 13.27L80.32 13.27L80.32 10.66L74.41 10.66L74.41 8.68L80.32 8.68L80.32 6.04L82.78 6.04L82.78 8.68L88.51 8.68L88.51 10.66L82.78 10.66L82.78 13.27L87.85 13.27L87.85 15.17L82.78 15.17ZM97.19 7.43L120.19 7.43L120.19 19.69L97.19 19.69L97.19 7.43ZM129.22 8.13L157.66 8.13L157.66 34.31C157.66 35.94 157.21 36.74 156.1 37.19C154.99 37.61 153.11 37.68 149.98 37.64C149.85 36.91 149.36 35.8 149.02 35.07C150.95 35.16 152.87 35.15 153.81 35.14C153.98 35.14 154.12 35.14 154.22 35.14C154.85 35.11 155.12 34.9 155.12 34.31L155.12 10.55L131.79 10.55L131.79 37.68L129.22 37.68L129.22 8.13ZM99.73 12.54L117.58 12.54L117.58 9.51L99.73 9.51L99.73 12.54ZM181.03 14.45L179.68 16.01L186.42 16.01L186.42 10.77L170.76 10.77L170.76 14.72C170.76 15.14 170.76 15.56 170.72 16.01L179.61 16.01C178.57 14.96 176.38 13.5 174.57 12.67L175.83 11.21C177.67 12.01 179.85 13.4 181.03 14.45ZM140.19 22.57C141.55 24.52 142.76 26.39 143.6 27.88L141.89 29.55C141.23 28.3 140.29 26.77 139.26 25.15C137.87 28.41 136.16 31.15 134.08 33.37C133.69 33.02 132.62 32.29 132.07 31.95C134.46 29.62 136.3 26.53 137.62 22.85C136.09 20.66 134.39 18.4 132.83 16.5L134.42 15.07C135.78 16.63 137.17 18.44 138.49 20.21C139.15 17.92 139.64 15.52 140.05 12.95L142.41 13.2C141.86 16.56 141.13 19.73 140.19 22.57ZM150.02 22.64C151.55 24.97 152.87 27.26 153.7 29.1L151.9 30.6C151.2 29.1 150.23 27.26 149.05 25.32C147.66 28.61 145.96 31.39 143.77 33.65C143.32 33.27 142.31 32.54 141.72 32.23C144.28 29.9 146.13 26.71 147.52 22.88C146.02 20.69 144.36 18.44 142.79 16.5L144.46 15.21C145.78 16.73 147.1 18.47 148.35 20.21C149.02 17.96 149.47 15.56 149.85 13.02L152.17 13.27C151.65 16.67 150.96 19.8 150.02 22.64ZM99.73 17.61L117.58 17.61L117.58 14.51L99.73 14.51L99.73 17.61ZM179.79 23.89C178.63 22.81 176.28 21.29 174.29 20.31L175.61 18.85C177.52 19.73 179.92 21.19 181.17 22.3L179.79 23.89ZM110.01 30.8L110.01 34.56L123.73 34.56L123.73 36.85L93.61 36.85L93.61 34.56L107.37 34.56L107.37 30.8L97.68 30.8L97.68 28.72L107.37 28.72L107.37 25.45L98.86 25.45C97.72 26.91 96.46 28.23 95.28 29.31C94.8 28.83 93.76 28.03 93.1 27.68C95.67 25.73 98.07 22.75 99.46 19.73L101.99 20.41C101.53 21.36 100.98 22.33 100.42 23.23L107.37 23.23L107.37 20.46L110.01 20.46L110.01 23.23L121.54 23.23L121.54 25.45L110.01 25.45L110.01 28.72L120.12 28.72L120.12 30.8L110.01 30.8ZM83.2 25.83L61.6 25.83L61.6 23.61L85.8 23.61L85.8 37.68L83.2 37.68L83.2 36.5L61.42 36.5L61.42 34.28L83.2 34.28L83.2 31.08L62.33 31.08L62.33 28.89L83.2 28.89L83.2 25.83ZM166.34 25.98L189.93 25.98L189.93 34.45L193.81 34.45L193.81 36.74L162.42 36.74L162.42 34.45L166.34 34.45L166.34 25.98ZM173.36 28.06L168.74 28.06L168.74 34.45L173.36 34.45L173.36 28.06ZM180.34 34.45L180.34 28.06L175.75 28.06L175.75 34.45L180.34 34.45ZM187.39 34.45L187.39 28.06L182.74 28.06L182.74 34.45L187.39 34.45Z" fill="url(#paint_linear_2_6_0)" fill-opacity="1.000000" fill-rule="evenodd"/>
+			</g>
+		</g>
+	</g>
+</svg>

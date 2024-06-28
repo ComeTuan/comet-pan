@@ -6,21 +6,22 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import top.nomelin.cometpan.cache.CurrentUserCache;
 import top.nomelin.cometpan.common.Result;
 import top.nomelin.cometpan.common.enums.CodeMessage;
+import top.nomelin.cometpan.common.exception.BusinessException;
 import top.nomelin.cometpan.pojo.Account;
 import top.nomelin.cometpan.pojo.User;
 import top.nomelin.cometpan.service.UserService;
 
+import top.nomelin.cometpan.util.StaticPeramUtil;
+
 import java.util.List;
 
-/**
- * 公共前端接口和非标准前端接口
- *
- * @author nomelin
- */
+
 @RestController
 public class WebController {
     private final CurrentUserCache currentUserCache;
@@ -62,16 +63,35 @@ public class WebController {
     /**
      * 注册
      */
+//    @PostMapping("/register")
+//    public Result register(@RequestBody Account account) {
+//        if (StrUtil.isBlank(account.getUserName()) || StrUtil.isBlank(account.getPassword())) {
+//            return Result.error(CodeMessage.PARAM_LOST_ERROR);
+//        }
+//        User user;
+//        user = userService.register(account);
+//        logger.info("注册成功：{}", account);
+//        return Result.success(user);
+//    }
+    // VerifyCodeController.java
     @PostMapping("/register")
     public Result register(@RequestBody Account account) {
-        if (StrUtil.isBlank(account.getUserName()) || StrUtil.isBlank(account.getPassword())) {
+        if (StrUtil.isBlank(account.getUserName()) || StrUtil.isBlank(account.getPassword()) || StrUtil.isBlank(account.getPhone())) {
             return Result.error(CodeMessage.PARAM_LOST_ERROR);
         }
         User user;
-        user = userService.register(account);
-        logger.info("注册成功：{}", account);
-        return Result.success(user);
+        try {
+            user = userService.register(account);
+            logger.info("注册成功：{}", account);
+            return Result.success(user);
+        } catch (BusinessException e) {
+            // 这里处理验证码错误的情况
+            e.printStackTrace();
+            return Result.error(CodeMessage.VERIFICATION_CODE_ERROR);
+        }
     }
+
+
 
     /**
      * 修改密码
@@ -114,5 +134,39 @@ public class WebController {
         return Result.success(res);
     }
 
+    @Autowired
+    private StaticPeramUtil staticPeramUtil;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;;
+
+    // 这个方法将从前端接收到电话号码，然后生成验证码并发送短信
+    @PostMapping("/sendVerifyCode")
+    public Result sendVerifyCode(@RequestBody String phoneNumber) {
+        // 使用用户输入的电话号码生成验证码
+        // 解析JSON字符串
+        JSONObject jsonObject = new JSONObject(phoneNumber);
+        // 从JSON对象中提取电话号码
+        String phone = jsonObject.getStr("phone");
+        String code = StaticPeramUtil.generateCode();
+        // 调用sendShortMessage方法发送验证码到手机
+        try {
+            StaticPeramUtil.getPhonemsg(phone,code);
+            // 将验证码和手机号存储到Redis中，这里假设你已经配置好了Redis并设置了对应的key和value
+            // 这里只是为了示例，实际使用时需要根据你的Redis配置进行修改
+            redisTemplate.opsForValue().set("verificationCode:" + phone, code);
+            return Result.success(phone);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.error(CodeMessage.SEND_ERROR);
+        }
+    }
+
+//    @PostMapping("/sendVerifyCode1")
+//    public Result sendVerifyCode1(@RequestBody String phoneNumber) {
+//        // 模拟耗时操作，如数据库查询，验证码生成等
+//        Thread.sleep(2000); // 延迟两秒
+//        // 模拟返回结果
+//        return Result.error(CodeMessage.SEND_ERROR);
+//    }
 }
 

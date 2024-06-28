@@ -1,10 +1,6 @@
 <template>
   <div class="main-content">
     <el-card class="card">
-      <div class="password">
-        <el-button class="primary-button" style="margin-right: 10rem" type="primary" @click="updatePassword">修改密码
-        </el-button>
-      </div>
       <el-form class="form" :model="user" label-width="80px">
         <div style="margin: 15px; text-align: center">
           <el-upload
@@ -31,6 +27,7 @@
         </el-form-item>
         <div class="btn-group">
           <el-button class="primary-button" type="primary" @click="update">保 存</el-button>
+          <el-button class="primary-button" type="primary" @click="updatePassword">修改密码</el-button>
         </div>
       </el-form>
     </el-card>
@@ -219,13 +216,6 @@ export default {
   box-shadow: 0 2rem 7rem rgba(217, 236, 255, 0.5);
   margin: 0 auto;
   border-radius: 5rem;
-}
-
-.password {
-  text-align: right;
-  width: 100%;
-  height: 5vh;
-
 }
 
 .form {

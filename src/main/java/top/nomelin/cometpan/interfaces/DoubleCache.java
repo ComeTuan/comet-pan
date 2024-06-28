@@ -4,12 +4,7 @@ import top.nomelin.cometpan.common.enums.CacheType;
 
 import java.lang.annotation.*;
 
-/**
- * DoubleCache
- *
- * @author nomelin
- * @since 2024/05/19 10:50
- **/
+
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

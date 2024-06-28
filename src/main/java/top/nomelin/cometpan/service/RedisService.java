@@ -8,11 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Redis基本操作
- *
- * @author nomelin
- */
+
 @Service
 public class RedisService {
 

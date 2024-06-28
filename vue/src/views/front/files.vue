@@ -2,17 +2,29 @@
   <div class="main-container">
     <div class="blank"></div>
     <div class="operation">
-      <el-input class="search-input" placeholder="搜索全部文件" style="width:12rem" v-model="name"
+      <el-input class="search-input" clearable placeholder="搜索全部文件" style="width:20% " v-model="name" prefix-icon="el-icon-search"
                 @keyup.enter.native="selectAll(1)">
-        <template #suffix>
-          <i class="el-icon-search" @click="selectAll(1)"
-             style="cursor: pointer; font-size: 2rem; color:#909399; transform: translateY(0.4rem);"></i>
-        </template>
       </el-input>
-
-
-      <el-button class="normal-button" plain style="margin-left: 1rem" @click="reset">
-        <i class="el-icon-refresh"></i> 重置
+      <el-button class="search-button" type="text" plain style="margin-left: 1rem" @click="selectAll(1)">搜索</el-button>
+      <el-dropdown class="select-dropdown" @command="handleFileTypeChange">
+        <el-button class="search-button" type="primary">
+          文件筛选<i class="el-icon-arrow-down el-icon--right"></i>
+        </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="ALL">全部文件</el-dropdown-item>
+          <el-dropdown-item command="Text File">文本文件</el-dropdown-item>
+          <el-dropdown-item command="Image">图片文件</el-dropdown-item>
+          <el-dropdown-item command="Video">视频文件</el-dropdown-item>
+          <el-dropdown-item command="Compressed File">压缩文件</el-dropdown-item>
+          <el-dropdown-item command="PDF File">PDF文件</el-dropdown-item>
+          <el-dropdown-item command="Excel File">Excel文件</el-dropdown-item>
+          <el-dropdown-item command="Word File">Word文件</el-dropdown-item>
+          <el-dropdown-item command="Code File">代码文件</el-dropdown-item>
+          <el-dropdown-item command="Executable File">可执行文件</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <el-button class="refresh-button" type="success" plain style="margin-left: 1rem" @click="reset">
+        <i class="el-icon-refresh"></i> 刷新
       </el-button>
       <!--      <img class="little-icon" src="@/assets/imgs/folder-add.svg" alt="">-->
       <el-button class="primary-button" type="text" plain style="margin-left: 1rem" @click="addFolder">
@@ -28,13 +40,61 @@
                  @click="shareFile">
         <i class="el-icon-share"></i> 分享
       </el-button>
-      <el-button class="primary-button" type="text" plain style="margin-left: 1rem"
+      <el-button class="warning-button" type="warning" plain style="margin-left: 1rem"
                  @click="downloadBatch">
         <i class="el-icon-download"></i> 下载
       </el-button>
-
-<!--      <span style="color: #909399;margin-left: 1rem ;font-size: 0.8rem ; font-weight: bold">功能仍在开发中</span>-->
+      <el-button type="primary" @click="showDialog" class="aibutton" style="margin-left: 15px; margin-top: 3px;">AI</el-button>
     </div>
+    <el-dialog :visible.sync="dialogAIVisible" center title="AI智能助手" :close-on-click-modal="false">
+      <template #title>
+        <div style="display: flex; align-items: center; justify-content: center;">
+          <h style="font-size: 25px">AI智能助手</h>
+          <el-avatar :size="35" :src="avatarSrc"></el-avatar>
+        </div>
+      </template>
+      <el-container>
+        <el-header height="0">
+        </el-header>
+        <el-main class="AIdialogmain">
+          <!-- 消息列表 -->
+<!--          <div class="message-list">-->
+<!--            <el-card v-for="(message, index) in messages" :key="index">-->
+<!--              {{ message }}-->
+<!--            </el-card>-->
+<!--          </div>-->
+          <!-- 消息列表 -->
+          <div class="message-list" ref="messageList">
+            <!-- 用户和AI消息 -->
+            <div v-for="(message, index) in messages" :key="index" :class="{'user-message': index % 2 !== 0, 'ai-message': index % 2 === 0}">
+              <!-- 用户消息 -->
+              <div v-if="index % 2 !== 0" class="user-message-container">
+                <div class="message-box">
+                  {{ message }}
+                </div>
+                <el-avatar class="avatar" :src="$baseUrl+'/avatar/'+user.id" shape="circle" fit="contain" size="large" alt=""></el-avatar>
+              </div>
+
+              <!-- AI消息 -->
+              <div v-else class="ai-message-container">
+                <el-avatar :size="35" :src="avatarSrc"></el-avatar>
+                <div class="message-box">
+                  {{ message }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-main>
+        <el-footer class="AIdialogfoot">
+          <!-- 输入框 -->
+          <el-input class="aiinput" v-model="inputMessage" :placeholder=placeholder :disabled="processingAI" size="large"  clearable style="background-color: #f0f0f0;">{{inputMessage}}</el-input>
+          <!-- 发送按钮 -->
+          <el-button class="submit-button"  @click="sendMessage" style="margin-left: 1%;" :disabled="processingAI">发送</el-button>
+          <el-button class="submit-button"  @click="setMessages">示例</el-button>
+        </el-footer>
+      </el-container>
+    </el-dialog>
+
     <div class="blank"></div>
     <div class="backAndForward">
       <el-button type="primary" plain @click="backNavigation" icon="el-icon-back" class="navigation-button"
@@ -44,13 +104,15 @@
       <div class="path">
         <span v-if="!isSearch">全部文件</span>
         <span v-else>搜索结果</span>
-        <span>{{ this.path }} 共{{ this.total }}</span>
+        <span>{{ this.path }} 共<h style="color: #0d53ff">{{ this.total }}</h>个文件</span>
       </div>
     </div>
 
     <div class="table">
-      <!-- 使用 v-if 控制 el-skeleton 的显示与隐藏 -->
+      <!-- 使用 v-if 控制 el-skeleton 加载动画的显示与隐藏 -->
       <el-skeleton class="table-skeleton" :rows="10" animated v-if="loading"/>
+      <!--文件列表-->
+
       <el-table v-else :data="filteredData" strip @selection-change="handleSelectionChange"
                 height="68vh" class="table-style" empty-text="" @row-contextmenu="rightClick"
                 ref="table" :default-sort="{prop: 'name', order: 'ascending'}"
@@ -59,21 +121,24 @@
                 :row-style="{height: '4rem'}"
                 :cell-style="{padding: '0'}"
       >
+        <!--无文件-->
         <template v-if="!isSearch" slot="empty">
           <el-empty description=" ">
-            <p class="emptyText"><span style='font-size: 1.2rem;font-weight: bold'>这里还没有文件哦, 赶快上传吧</span>
+            <p class="emptyText"><span style='font-size: 1.2rem;font-weight: bold;'>这里还没有文件哦, 赶快上传吧</span>
             </p>
           </el-empty>
           <el-button type="primary" @click="uploadFile" class="primary-button">上传 / 秒传</el-button>
         </template>
+        <!--搜索文件为空-->
         <template v-else slot="empty">
           <el-empty description=" ">
             <p class="emptyText"><span style='font-size: 1.1rem;font-weight: bold'>没有找到相关文件</span></p>
           </el-empty>
         </template>
 
+        <!--复选框列-->
         <el-table-column type="selection" min-width="30" align="center"></el-table-column>
-        <!--        <el-table-column prop="id" label="序号" width="70" align="center"></el-table-column>-->
+        <!--文件图标-->
         <el-table-column prop="folder" label="" width="60">
           <template v-slot="scope">
             <span @click="handleFolderClick(scope.row)" style="cursor: pointer;">
@@ -81,35 +146,35 @@
             </span>
           </template>
         </el-table-column>
+        <!--文件信息-->
         <el-table-column prop="name" label="文件名称" min-width="180" show-overflow-tooltip
                          sortable :sort-method="customSortMethod" :sort-orders="['ascending', 'descending']"
         >
           <template v-slot="scope">
+<!--            搜索高亮-->
             <template v-if="!scope.row.isEditing">
               <div class="name-container" @click="handleFolderClick(scope.row)">
-                <!-- 如果type为空，则只显示name -->
+                <!-- 如果type为空，则只显示name 文件夹 -->
                 <span v-if="!scope.row.type" v-html="highlightText(scope.row.name)"
                       style="cursor: pointer;"></span>
-                <!-- 如果type不为空，则显示完整名称 -->
+                <!-- 如果type不为空，则显示完整名称 文件+后缀 -->
                 <span v-else v-html="highlightText(scope.row.name + '.' + scope.row.type)"
                       style="cursor: pointer;"></span>
               </div>
-
             </template>
-
+            <!-- 重命名 -->
             <template v-else>
               <div style="display: flex; align-items: center;">
-                <el-input class="rename-input" v-if="!scope.row.type" v-model="editedName"
-                          @keyup.enter.native="saveRename(scope.row)"
-                          @blur="cancelRename(scope.row)"></el-input>
-                <el-input class="rename-input" v-else v-model="editedName" @keyup.enter.native="saveRename(scope.row)"
-                          @blur="cancelRename(scope.row)"></el-input>
+                <el-input class="rename-input" v-model="editedName"
+                          @keyup.enter.native="saveRename(scope.row)"></el-input>
                 <!-- 取消按钮 -->
-                <el-button @click="cancelRename(scope.row)" size="mini" style="margin-left: 5px;">取消</el-button>
+                <el-button @click="saveRename(scope.row)" size="mini" type="primary" style="margin-left: 5px;">确定</el-button>
+                <el-button @click="cancelRename(scope.row)" size="mini" type="danger" style="margin-left: 5px;">取消</el-button>
               </div>
             </template>
           </template>
         </el-table-column>
+
         <el-table-column label="">
           <template v-slot="scope">
             <template v-if="!scope.row.isEditing">
@@ -117,7 +182,7 @@
                 <div class="opt-container" v-if="scope.row.optShow">
                   <el-tooltip content="分享" effect="dark" :open-delay="100">
                     <i class="el-icon-share" style="margin-right: 10px; cursor: pointer"
-                       @click="shareFile"></i>
+                       @click="shareFile()"></i>
                   </el-tooltip>
                   <el-tooltip content="删除" effect="dark" :open-delay="100">
                     <i class="el-icon-delete-solid" style="margin-right: 10px; cursor: pointer"
@@ -135,9 +200,7 @@
               </div>
             </template>
           </template>
-
         </el-table-column>
-
         <!--        <el-table-column prop="path" label="文件路径" show-overflow-tooltip></el-table-column>-->
         <!--        <el-table-column prop="type" label="文件类型"></el-table-column>-->
         <el-table-column prop="size" label="文件大小" :formatter="formatSize"
@@ -152,6 +215,7 @@
                                 </span>
                               </template>-->
         </el-table-column>
+        <el-table-column prop="type" label="文件类型" :formatter="formatType" width="90"></el-table-column>
       </el-table>
     </div>
     <div id="contextmenu"
@@ -167,7 +231,7 @@
            @click="downloadByBrowser(CurrentRow)">下载
       </div>
       <div class="contextmenu__item"
-           @click="shareFile">分享
+           @click="shareFile()">分享
       </div>
       <div class="contextmenu__item"
            @click="rename(CurrentRow)">重命名
@@ -181,12 +245,12 @@
       <div class="contextmenu__item"
            @click="details(CurrentRow)">详细信息
       </div>
-      <div class="divider">
-        <el-divider></el-divider>
-      </div>
-
+<!--      <div class="divider">-->
+<!--        <el-divider></el-divider>-->
+<!--      </div>-->
+      <hr>
       <div class="contextmenu__item"
-           @click="del(CurrentRow.id)">删除
+           @click="del(CurrentRow.id)" style="color: #ff2723">删除
       </div>
 
     </div>
@@ -195,10 +259,10 @@
                center>
       <el-form ref="form" :model="shareForm" label-width="25%" :rules="rules">
         <el-form-item label="分享名称">
-          <el-input v-model="shareForm.name"></el-input>
+          <el-input v-model="shareForm.name" style="width:60%"></el-input>
         </el-form-item>
-        <el-form-item label="过期时间">
-          <el-select v-model="shareForm.leftDays">
+        <el-form-item label="过期时间" >
+          <el-select v-model="shareForm.leftDays" style="width:60%">
             <el-option label="一天" value="1"></el-option>
             <el-option label="三天" value="3"></el-option>
             <el-option label="七天" value="7"></el-option>
@@ -222,7 +286,6 @@
           </el-button>
         </el-form-item>
       </el-form>
-
     </el-dialog>
 
     <template>
@@ -286,6 +349,8 @@ export default {
 
       loading: true, // 控制加载动画的显示与隐藏
       folderId: -1, // 当前的文件夹的id
+      pfoldrId: -1, // 文件夹指针
+
       path: "", // 当前路径
 
       menuVisible: false, // 右键菜单是否显示
@@ -316,6 +381,18 @@ export default {
 
       type: "move", // 移动类型，move 移动，copy 复制
 
+      avatarSrc: 'https://cdn.cometuan.space/images/avatar/AIassistant.jpg',
+      dialogAIVisible: false, // 对话框是否可见
+      inputMessage: '', // 用户输入的消息
+      messages: [], // 消息列表
+
+      processingAI: false,
+      placeholder: '请输入消息', // 输入框的placeholder
+      inputMessages: ['介绍一下彗星网盘？','怎么进行文件秒传？','怎么进行文件分享？','不小心将文件删除了怎么办？','彗星网盘有什么功能？'],
+
+      fileType: null, // 用户选择的文件类型
+      tableData2: [], // 经过筛选的数据
+      dataflag:0,
 
     }
   },
@@ -361,8 +438,142 @@ export default {
         return true;
       }
     },
+    processingAI() {
+      return this.processingAI;
+    },
+    extensionToType() {
+      return {
+        zip: '压缩文件',
+        rar: '压缩文件',
+        '7z': '压缩文件',
+        tar: '压缩文件',
+        gz: '压缩文件',
+        bz2: '压缩文件',
+        jar: '压缩文件',
+        mp4: '视频',
+        avi: '视频',
+        rmvb: '视频',
+        wmv: '视频',
+        flv: '视频',
+        mp3: '音频',
+        wav: '音频',
+        wma: '音频',
+        aac: '音频',
+        flac: '音频',
+        jpg: '图片',
+        jpeg: '图片',
+        png: '图片',
+        gif: '图片',
+        bmp: '图片',
+        psd: '图片',
+        webp: '图片',
+        ico: '图片',
+        txt: '文本文件',
+        md: '文本文件',
+        log: '文本文件',
+        ini: '文本文件',
+        xls: 'Excel 文件',
+        xlsx: 'Excel 文件',
+        csv: 'Excel 文件',
+        pdf: 'PDF 文件',
+        ppt: 'PPT 文件',
+        pptx: 'PPT 文件',
+        doc: 'Word 文件',
+        docx: 'Word 文件',
+        exe: '可执行文件',
+        bat: '可执行文件',
+        sh: '可执行文件',
+        apk: '可执行文件',
+        java: '代码文件',
+        c: '代码文件',
+        cpp: '代码文件',
+        py: '代码文件',
+        js: '代码文件',
+        html: '代码文件',
+        css: '代码文件',
+        php: '代码文件',
+        go: '代码文件',
+        swift: '代码文件',
+        scala: '代码文件',
+        kotlin: '代码文件',
+        sql: '代码文件',
+        xml: '代码文件',
+        json: '代码文件',
+        vue: '代码文件',
+        ts: '代码文件',
+        yml: '代码文件',
+        yaml: '代码文件',
+      };
+    },
+    extensionToType2() {
+      return {
+        zip: 'Compressed File',
+        rar: 'Compressed File',
+        '7z': 'Compressed File',
+        tar: 'Compressed File',
+        gz: 'Compressed File',
+        bz2: 'Compressed File',
+        jar: 'Compressed File',
+        mp4: 'Video',
+        avi: 'Video',
+        rmvb: 'Video',
+        wmv: 'Video',
+        flv: 'Video',
+        mp3: 'Audio',
+        wav: 'Audio',
+        wma: 'Audio',
+        aac: 'Audio',
+        flac: 'Audio',
+        jpg: 'Image',
+        jpeg: 'Image',
+        png: 'Image',
+        gif: 'Image',
+        bmp: 'Image',
+        psd: 'Image',
+        webp: 'Image',
+        ico: 'Image',
+        txt: 'Text File',
+        md: 'Text File',
+        log: 'Text File',
+        ini: 'Text File',
+        xls: 'Excel File',
+        xlsx: 'Excel File',
+        csv: 'Excel File',
+        pdf: 'PDF File',
+        ppt: 'PPT File',
+        pptx: 'PPT File',
+        doc: 'Word File',
+        docx: 'Word File',
+        exe: 'Executable File',
+        bat: 'Executable File',
+        sh: 'Executable File',
+        apk: 'Executable File',
+        java: 'Code File',
+        c: 'Code File',
+        cpp: 'Code File',
+        py: 'Code File',
+        js: 'Code File',
+        html: 'Code File',
+        css: 'Code File',
+        php: 'Code File',
+        go: 'Code File',
+        swift: 'Code File',
+        scala: 'Code File',
+        kotlin: 'Code File',
+        sql: 'Code File',
+        xml: 'Code File',
+        json: 'Code File',
+        vue: 'Code File',
+        ts: 'Code File',
+        yml: 'Code File',
+        yaml: 'Code File',
+      };
+    },
   },
   watch: {
+    messages() {
+      this.scrollToBottom();
+    },
     dialogFilesVisible(newVal, oldVal) {
       if (oldVal && !newVal) {
         // 当 dialogFilesVisible 从 true 变为 false 时执行的逻辑
@@ -372,7 +583,23 @@ export default {
           location.reload();
         }, 200); // 延迟200毫秒
       }
-    }
+    },
+    dialogAIVisible(newValue, oldValue) {
+      if (newValue === false) {
+        // 当对话框关闭时执行的代码
+        this.clearMessages(); // 清理消息列表
+      }
+    },
+    processingAI(newValue) {
+      if (newValue) {
+        this.placeholder = 'AI助手正在思考';
+      } else {
+        this.placeholder = '请输入消息';
+      }
+    },
+    fileType(newVal, oldVal) {
+      this.filterDataByType();
+    },
   },
   methods: {
     customSortMethod(a, b) {
@@ -500,6 +727,7 @@ export default {
       this.name = null
       this.isSearch = false;
       this.searchText = "";
+      this.fileType=null;
       // this.load(1);
       this.folderId = this.user.rootId
       this.handleCacheAndGetFileRequest("/files")
@@ -507,6 +735,7 @@ export default {
     reload() {
       this.getFileRequest(this.requestCache[this.cacheIndex])
     },
+    //发送请求获取文件夹内的文件列表，并更新表格数据和文件路径。
     handleCacheAndGetFileRequest(url) {
       // 用于封装getFileRequest和addToCache方法，统一处理
       // 丢弃索引之后的缓存(因为用户已经重新点击了新的路径)
@@ -543,10 +772,10 @@ export default {
       // 更新缓存索引
       this.cacheIndex = this.requestCache.length - 1
     },
+    //处理文件夹图标的点击事件
     handleFolderClick(row) {
       if (row.folder) {
         this.handleCacheAndGetFileRequest('/files/folder/' + row.id)
-        // console.log(this.requestCache + ":" + this.cacheIndex)
         this.folderId = row.id
       } else {
         //let originUrl = 'http://localhost:12345/download?diskId=' + row.diskId + "&fileId=" + row.id;
@@ -857,7 +1086,101 @@ export default {
       }).catch(() => {
       })
     },
-
+    // 打开对话框
+    showDialog() {
+      this.dialogAIVisible = true
+      this.clearMessages()
+    },
+    // 发送消息
+    sendMessage() {
+      if (this.inputMessage !== '') {
+        this.messages.push(this.inputMessage) // 添加用户发送的消息到消息列表
+        // 发送请求到 AI 接口
+        this.sendAIRequest(this.inputMessage);
+        this.inputMessage = '' // 清空输入框
+      }else {
+        this.$message.error('请输入消息');
+      }
+    },
+    sendAIRequest(contents) {
+      this.processingAI = true; // 设置为true，表示AI正在处理
+      this.inputMessage = 'AI助手正在思考...';
+          this.$request.post('http://localhost:12345/ai/chat', {
+            data: {
+              content: contents
+            }
+          })
+          .then(res => {
+            if (res.code === '200') {   // 假设返回的res.data包含code
+              this.messages.push(res.data); // 添加 AI 回复的消息到消息列表
+              this.processingAI = false; // AI处理完成，设置为false
+            } else {
+              this.$message.error('请求失败，未知原因');
+              this.messages.push("请求失败请重试");
+              this.processingAI = false; // AI处理完成，设置为false
+            }
+          })
+          .catch(error => {
+            // 网络错误处理
+            this.$message.error('网络错误，请检查网络连接');
+            this.messages.push("请求失败请重试");
+            this.processingAI = false; // AI处理完成，设置为false
+          });
+    },
+    clearMessages() {
+      this.messages = []; // 清空消息列表
+      this.inputMessage = ''; // 清空输入框
+      this.messages.push("您好，有什么可以帮到您?")
+    },
+    // 滚动到底部的方法
+    scrollToBottom() {
+      // 使用 nextTick 确保在 DOM 更新后执行
+      this.$nextTick(() => {
+        const messageList = this.$refs.messageList;
+        if (messageList) {
+          // 将滚动条滚动到底部
+          messageList.scrollTop = messageList.scrollHeight;
+        }
+      });
+    },
+    setMessages() {
+      const randomIndex = Math.floor(Math.random() * this.inputMessages.length);
+      this.inputMessage = this.inputMessages[randomIndex];
+    },
+    formatType(row) {
+      if (row.type) {
+        const typeDescription = this.extensionToType[row.type]; // 检查 row.type 是否有效
+        return typeDescription || '未知'; // 如果没有找到对应的类型，返回 '未知'
+      }
+      return '文件夹'; // 当 row.type 为 undefined 时返回
+    },
+    handleFileTypeChange(fileType) {
+      if (this.tableData2.length===0 && this.dataflag===0){
+        //初始化tableData2
+        const data = this.tableData
+        this.tableData2=data
+        this.dataflag=1
+      }
+      if (this.pfoldrId!==this.folderId){
+        this.tableData2=this.tableData
+        this.pfoldrId=this.folderId
+      }
+      if (fileType === 'ALL'){
+        this.fileType="ALL";
+      }else {
+        this.fileType = fileType;
+      }
+    },
+    filterDataByType() {
+      //按用户的文件分类选择改变要渲染的数据集
+      let data2=this.tableData2
+      if (this.fileType!=="ALL") {
+        let data = data2.filter(item => this.extensionToType2[item.type] === this.fileType)
+        this.tableData=data
+      } else {
+        this.tableData=data2
+      }
+    },
   }
 }
 </script>
@@ -870,11 +1193,11 @@ export default {
 
 .operation {
   /*position: absolute;*/
-  margin-left: 3%;
+  margin-left: 20px;
 }
 
 .backAndForward {
-  margin-left: 5%;
+  margin-left: 1.5%;
   width: 80%;
   display: flex;
   justify-content: flex-start; /* 靠左对齐 */
@@ -882,7 +1205,7 @@ export default {
 
 
 ::v-deep .search-input .el-input__inner {
-  width: 12rem;
+  /*width: 12rem;*/
   height: 3rem;
   background-color: #EBEEF5;
   text-align: center;
@@ -894,7 +1217,7 @@ export default {
 }
 
 ::v-deep .highlight {
-  /*background-color: yellow;*/
+  background-color: yellow;
   color: #0d53ff;
   font-weight: bold;
   font-size: 1rem;

@@ -30,17 +30,24 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(debugInterceptor).addPathPatterns("/**");
         registry.addInterceptor(tokenInterceptor).addPathPatterns("/**")
                 .excludePathPatterns("/")
+                .excludePathPatterns("/sendVerifyCode")
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/register")
+                .excludePathPatterns("/ai/chat/**")
                 .excludePathPatterns("/avatar/**")
                 .excludePathPatterns("/users/{id}")
                 .excludePathPatterns("/valid/*")
                 .excludePathPatterns("/share/*")
                 .excludePathPatterns("/download/**")// 下载文件,到时候请关闭
-                .excludePathPatterns("/files/share/batch");
+                .excludePathPatterns("/files/share/batch")
+                .excludePathPatterns("/qiniu/upload")
+                .excludePathPatterns("/qiniu/listSpaceFiles")
+                .excludePathPatterns("/qiniu/getFileUrl");
 //                .excludePathPatterns("/upload/**");
         registry.addInterceptor(adminInterceptor).addPathPatterns("/users/**")
                 .excludePathPatterns("/users/{id}")
+//                .addPathPatterns("/files/**") // 添加对/files路径的访问权限
+//                .excludePathPatterns("/files/share/batch");
         ;// 管理后台
 
         registry.addInterceptor(userInterceptor).addPathPatterns("/files/**")// 用户文件空间

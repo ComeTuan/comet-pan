@@ -5,39 +5,12 @@
     <div class="front-header">
       <div class="front-header-left">
         <a href="/files">
-          <img class="logo" src="@/assets/imgs/logo.svg" alt="logo">
+          <img class="logo" src="@/assets/imgs/logo.png" alt="logo">
         </a>
       </div>
       <div class="front-header-center">
-        <!--        <el-breadcrumb separator-class="el-icon-arrow-right">
-                  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                  <el-breadcrumb-item :to="{ path: $route.path }">{{ $route.meta.name }}</el-breadcrumb-item>
-                </el-breadcrumb>-->
       </div>
       <div class="front-header-right">
-        <!--        <div v-if="!user.userName">
-                  <el-button @click="$router.push('/login')">登录</el-button>
-                  <el-button @click="$router.push('/register')">注册</el-button>
-                </div>
-                <div v-if="user.userName">
-                  <el-dropdown>
-                    <div class="front-header-dropdown">
-                      <img :src="$baseUrl+'/avatar/'+user.id" alt="">
-                      <div style="margin-left: 10px; color: #151515;font-size: 14px;font-weight: bold;">
-                        <span>{{ user.name }}</span>
-        &lt;!&ndash;                <i class="el-icon-arrow-down" style="margin-left: 5px"></i>&ndash;&gt;
-                      </div>
-                    </div>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item>
-                        <div @click="$router.push('/person')">个人中心</div>
-                      </el-dropdown-item>
-                      <el-dropdown-item>
-                        <div @click="logout">退出</div>
-                      </el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown>
-                </div>-->
       </div>
     </div>
     <!--主体-->
@@ -62,33 +35,26 @@
         </div>
 
 
-        <el-menu text-color="#565757" active-text-color="#0d53ff" router class="el-menu" :default-active="$route.path">
+        <el-menu text-color="#565757" active-text-color="#0d53ff" router class="el-menu" :default-active="$route.path" style="height: 71%">
           <el-menu-item class="el-menu-item" index="/files">
             <i class="el-icon-folder-opened"></i>
             <span class="words" slot="title">全部文件</span>
           </el-menu-item>
-          <!--          <el-menu-item class="el-menu-item" index="/upload">-->
-          <!--            <i class="el-icon-upload"></i>-->
-          <!--            <span class="words" slot="title">上传文件</span>-->
-          <!--          </el-menu-item>-->
           <el-menu-item class="el-menu-item" index="/share">
             <i class="el-icon-share"></i>
             <span class="words" slot="title">我的分享</span>
           </el-menu-item>
-
-          <el-menu-item class="el-menu-item" index="/person">
-            <i class="el-icon-user-solid"></i>
-            <span class="words" slot="title">个人中心</span>
-          </el-menu-item>
-
-          <el-menu-item class="el-menu-item" index="/group">
-            <i class="el-icon-user-solid"></i>
-            <span class="words" slot="title">我的群组</span>
-          </el-menu-item>
-
           <el-menu-item class="el-menu-item" index="/trash">
             <i class="el-icon-delete-solid"></i>
             <span class="words" slot="title">回收中心</span>
+          </el-menu-item>
+          <el-menu-item class="el-menu-item" index="/message">
+            <i class="el-icon-message"></i>
+            <span class="words" slot="title">我的消息</span>
+          </el-menu-item>
+          <el-menu-item class="el-menu-item" index="/person">
+            <i class="el-icon-user-solid"></i>
+            <span class="words" slot="title">个人中心</span>
           </el-menu-item>
           <el-menu-item class="el-menu-item" @click="logout">
             <i class="el-icon-switch-button"></i>
@@ -96,6 +62,7 @@
           </el-menu-item>
         </el-menu>
       </div>
+      <!--文件面板-->
       <div class="main-right">
         <router-view @update:user="updateUser"/>
       </div>
@@ -122,13 +89,17 @@ export default {
     }
   },
 
+  //更新组件的状态和DOM以反映最新的空间使用情况
   mounted() {
-    // this.loadNotice()
+    //获取用户已使用的空间大小
     this.getUsedSpace()
   },
+  //组件的数据或计算属性发生变化后，组件重新渲染时被调用
   updated() {
+    //重新获取用户已使用的空间大小
     this.getUsedSpace()
   },
+
   computed: {
     // 计算已用空间占比
     percentage() {
@@ -185,6 +156,7 @@ export default {
       });
     },
     goToUserProfile() {
+      //路由到个人中心
       this.$router.push('/person');
     },
   }
@@ -197,18 +169,21 @@ export default {
 .front-layout {
   /*display: flex;*/
   height: 100vh;
+
 }
 
 .main-body {
+  margin-top: 20px;
   display: flex;
-  /*height: 100%;*/
-  height: 90vh;
+  height: 85%;
+  /*height: 90vh;*/
   /*flex-grow: 1;*/
+  /*background: linear-gradient(red, yellow), linear-gradient(blue, green);*/
 }
 
 
 .main-left {
-  width: 20vw;
+  width: 23vw;
   height: 100%;
   min-width: 150px;
 }
@@ -220,7 +195,7 @@ export default {
   height: auto;
   width: 80%;
   margin-left: 10%;
-  margin-top: 10%;
+  /*margin-top: 10%;*/
   padding-bottom: 10%;
   /*position: relative; !* 设置相对定位，为了让进度条容器相对于该 div 定位 *!*/
 }
@@ -272,7 +247,7 @@ export default {
 .el-menu-item:hover {
   font-size: 1rem;
   height: 3.5rem;
-  padding-top: 2px; /* 增加上边距 */
+  /*padding-top: 2px; */
   /*margin-top: 0.5rem; !* 修正菜单项的高度 *!*/
 }
 
@@ -282,6 +257,7 @@ export default {
 }
 
 .front-layout {
+  /*background: linear-gradient(), linear-gradient();*/
   background: #ebeef5;
 }
 
@@ -292,7 +268,7 @@ export default {
 /*  font-size: 12px*/
 /*}*/
 .logo {
-  width: 10vw;
+  width: 15vw;
   margin-top: 3%;
 }
 
@@ -369,7 +345,7 @@ export default {
   display: inline-block; /* 将 span 元素设置为行内块级元素 */
   font-weight: bold;
   font-size: 0.8rem;
-  width: 100%; /* 设置宽度为100% */
+  width: 88%; /* 设置宽度为100% */
   text-align: right; /* 将文本内容右对齐 */
   box-sizing: border-box; /* 使用边框盒模型，确保宽度包含 padding 和 border */
 }

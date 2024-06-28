@@ -3,7 +3,7 @@
     <div class="front-header">
       <div class="front-header-left">
         <a href="/files">
-          <img class="logo" src="@/assets/imgs/logo.svg" alt="logo">
+          <img class="logo" src="@/assets/imgs/logo.png" alt="logo">
         </a>
       </div>
       <div class="front-header-center">
@@ -39,7 +39,7 @@
           </div>
         </div>
         <el-menu v-if="isLogin" text-color="#565757" active-text-color="#0d53ff" router class="el-menu"
-                 :default-active="$route.path">
+                 :default-active="$route.path" style="height: 71%">
           <el-menu-item class="el-menu-item" index="/files">
             <i class="el-icon-folder-opened"></i>
             <span class="words" slot="title">全部文件</span>
@@ -396,26 +396,27 @@ export default {
 }
 
 .main-body {
+  margin-top: 20px;
   display: flex;
-  /*height: 100%;*/
-  height: 90vh;
+  height: 85%;
   /*flex-grow: 1;*/
 }
 
 
 .main-left {
-  width: 18vw;
+  width: 23vw;
   height: 100%;
+  min-width: 150px;
 }
 
 .main-left-upper {
   background-color: #ffffff;
   border: none;
-  border-radius: 20px;
-  height: 15%;
+  border-radius: 1.5rem;
+  height: auto;
   width: 80%;
   margin-left: 10%;
-  margin-top: 10%;
+  padding-bottom: 10%;
   /*position: relative; !* 设置相对定位，为了让进度条容器相对于该 div 定位 *!*/
 }
 
@@ -428,7 +429,7 @@ export default {
 }
 
 .avatar {
-  margin-right: 2rem; /* 头像与用户名之间的间距 */
+  margin-right: 1.4rem; /* 头像与用户名之间的间距 */
 }
 
 .user-name {
@@ -446,21 +447,24 @@ export default {
 
 .el-menu {
   border: none;
-  border-radius: 1rem;
-  height: 70%;
+  border-radius: 1.5rem;
   width: 80%;
   margin-left: 10%;
   margin-top: 10%;
+  padding-bottom: 30%;
+  padding-top: 5%;
 }
 
 .el-menu-item {
-  /*padding-top: 20px; !* 增加上边距 *!*/
-  margin-top: 1rem; /* 修正菜单项的高度 */
+  height: 3.5rem;
+  font-size: 1rem;
 }
 
 .el-menu-item:hover {
-  padding-top: 2px; /* 增加上边距 */
-  margin-top: 1rem; /* 修正菜单项的高度 */
+  font-size: 1rem;
+  height: 49px;
+  /*padding-top: 2px; !* 增加上边距 *!*/
+  /*margin-top: 1rem; !* 修正菜单项的高度 *!*/
 }
 
 .main-right {
@@ -480,8 +484,8 @@ export default {
 /*  font-size: 12px*/
 /*}*/
 .logo {
-  width: 10vw;
-  margin-top: 2rem;
+  width: 15vw;
+  margin-top: 3%;
 }
 
 .front-header {
@@ -497,7 +501,7 @@ export default {
   width: 50%;
   /*display: flex;*/
   /*align-items: center;*/
-  padding-left: 3%;
+  padding-left: 2%;
 }
 
 .front-header-center {
@@ -522,7 +526,7 @@ export default {
   display: inline-block; /* 将 span 元素设置为行内块级元素 */
   font-weight: bold;
   font-size: 0.8rem;
-  width: 100%; /* 设置宽度为100% */
+  width: 88%; /* 设置宽度为100% */
   text-align: right; /* 将文本内容右对齐 */
   box-sizing: border-box; /* 使用边框盒模型，确保宽度包含 padding 和 border */
 }

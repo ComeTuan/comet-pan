@@ -18,7 +18,7 @@
         <el-table-column prop="title" label="标题" show-overflow-tooltip></el-table-column>
         <el-table-column prop="content" label="内容" show-overflow-tooltip></el-table-column>
         <el-table-column prop="time" label="创建时间"></el-table-column>
-        <el-table-column prop="user" label="创建人"></el-table-column>
+        <el-table-column prop="userId" label="创建人"></el-table-column>
 
         <el-table-column label="操作" width="180" align="center">
           <template v-slot="scope">
@@ -65,6 +65,7 @@
 import {setItemWithExpiry} from "@/App"
 import {getItemWithExpiry} from "@/App"
 import {updateItemWithExpiry} from "@/App"
+import moment from "moment/moment";
 export default {
   name: "Notice",
   data() {
@@ -163,15 +164,22 @@ export default {
       }).then(res => {
         this.tableData = res.data?.list
         this.total = res.data?.total
+        this.tableData.forEach(item => {
+          item.userId=this.user.name;
+          item.time = moment(item.time).format('YYYY-MM-DD HH:mm:ss');
+        });
       })
+
     },
     reset() {
+      this.name = null
       this.title = null
       this.load(1)
     },
     handleCurrentChange(pageNum) {
       this.load(pageNum)
     },
+
   }
 }
 </script>

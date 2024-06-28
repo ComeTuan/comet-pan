@@ -11,7 +11,9 @@ public class Account {
     private String avatar;
     private Integer role;
     private String token;
+    private String phone;
 
+    private String verifyCode;
     @Override
     public String toString() {
         return "id=" + id +
@@ -23,6 +25,8 @@ public class Account {
                 ", token='" + token + '\''
                 ;
     }
+
+
 
     public Integer getId() {
         return id;
@@ -78,5 +82,21 @@ public class Account {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
     }
 }

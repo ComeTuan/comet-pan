@@ -1,10 +1,6 @@
 package top.nomelin.cometpan.pojo;
 
-/**
- * 物理磁盘文件
- *
- * @author nomelin
- */
+
 public class DiskFile {
     private Integer id;
     private Integer count;

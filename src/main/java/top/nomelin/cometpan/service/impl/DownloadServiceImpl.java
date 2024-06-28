@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import top.nomelin.cometpan.common.enums.CodeMessage;
 import top.nomelin.cometpan.common.exception.BusinessException;
 import top.nomelin.cometpan.common.exception.SystemException;
-import top.nomelin.cometpan.dao.DiskMapper;
+import top.nomelin.cometpan.mapper.DiskMapper;
 import top.nomelin.cometpan.pojo.DiskFile;
 import top.nomelin.cometpan.pojo.DownloadFileInfo;
 import top.nomelin.cometpan.pojo.FileInfo;
@@ -47,7 +47,7 @@ import java.util.concurrent.Executors;
 public class DownloadServiceImpl implements DownloadService {
     private final static Logger logger = LoggerFactory.getLogger(DownloadServiceImpl.class);
     /**
-     * 分片下载每一片大小为50M
+     * 分片每一片大小为50M
      */
     private static final Long PER_SLICE = 1024 * 1024 * 50L;
     /**

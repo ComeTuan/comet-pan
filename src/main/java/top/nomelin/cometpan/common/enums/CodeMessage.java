@@ -1,8 +1,6 @@
 package top.nomelin.cometpan.common.enums;
 
-/**
- * @author nomelin
- */
+
 public enum CodeMessage {
     SUCCESS("200", "成功"),
 
@@ -46,6 +44,8 @@ public enum CodeMessage {
     DOWNLOAD_FILE_ERROR("703", "文件下载失败"),
     SHARE_NOT_EXIST_ERROR("704", "分享不存在或已过期"),
 
+    SEND_ERROR("780","验证码发送失败"),
+    VERIFICATION_CODE_ERROR("781","验证码错误"),
     SYSTEM_ERROR("800", "系统异常"),
     BEAN_ERROR("801", "Bean代理异常"),
     REDIS_CONNECTION_ERROR("801", "Redis连接失败,请稍后重试"),

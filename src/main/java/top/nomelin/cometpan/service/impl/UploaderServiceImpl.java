@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import top.nomelin.cometpan.cache.CurrentUserCache;
 import top.nomelin.cometpan.common.enums.CodeMessage;
 import top.nomelin.cometpan.common.exception.SystemException;
-import top.nomelin.cometpan.dao.DiskMapper;
+import top.nomelin.cometpan.mapper.DiskMapper;
 import top.nomelin.cometpan.pojo.DiskFile;
 import top.nomelin.cometpan.pojo.FileChunk;
 import top.nomelin.cometpan.pojo.FileChunkResult;

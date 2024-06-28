@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="header">
-      <img src="@/assets/imgs/logo.svg" alt="" class="logo">
+      <img src="@/assets/imgs/logo.png" alt="" class="logo">
     </div>
     <div class="main-content">
       <div class="register-box">
@@ -29,6 +29,23 @@
                           v-model="form.username" @blur="checkUsername" maxlength="30"></el-input>
               </div>
             </el-form-item>
+            <el-form-item prop="phone">
+              <div class="custom-input">
+                <el-input class="input-field" size="medium" prefix-icon="el-icon-phone" placeholder="请输入电话号码"
+                          v-model="form.phone" maxlength="11"></el-input>
+              </div>
+            </el-form-item>
+            <el-form-item prop="verifyCode">
+              <div class="custom-input" style="width: 50%; float: left;">
+                <el-input class="input-field" size="medium" prefix-icon="el-icon-key" placeholder="请输入验证码" v-model="form.VerifyCode" maxlength="6" ></el-input>
+              </div>
+<!--              <el-button class="register-button" type="primary"  style="width: 222px;font-size: 18px;margin-left: 6px;" @click="getVerifyCode" >获取验证码</el-button>-->
+              <el-button class="register-button" type="primary" :disabled="timeLeft > 0"
+                         style="width: 222px;font-size: 18px;margin-left: 6px;"
+                         @click="getVerifyCode">
+                {{ timeLeft > 0 ? `${timeLeft} 秒` : '获取验证码' }}
+              </el-button>
+            </el-form-item>
             <el-form-item prop="password">
               <div class="custom-input">
                 <el-input class="input-field" size="medium" prefix-icon="el-icon-lock" placeholder="请输入密码"
@@ -48,7 +65,6 @@
             </el-form-item>
             <div class="login-link">
               <span>已有账号？请 </span><a href="/login">登录</a>
-
             </div>
           </el-form>
         </div>
@@ -88,9 +104,16 @@ export default {
 
       ],
       slideVerifyShow: false,
+      timeLeft: 0, // 新增变量用来记录剩余的秒数
       rules: {
         username: [
           {required: true, message: '请输入用户名', trigger: 'blur'},
+        ],
+        phone: [
+          {required: true, message: '请输入手机号', trigger: 'blur'},
+        ],
+        VerifyCode: [
+          {required: true, message: '请输入验证码', trigger: 'blur'},
         ],
         password: [
           {required: true, message: '请输入密码', trigger: 'blur'},
@@ -105,7 +128,30 @@ export default {
 
   },
   methods: {
+    getVerifyCode() {
+      // 确保填写了手机号
+      if (!this.form.phone) {
+        this.$message.error('请输入手机号');
+        return;
+      }
+      this.$message.success('验证码尝试发送');
+      this.timeLeft = 60; // 设置60秒的倒计时
+      this.startTimer(); // 启动计时器
+      // 发送请求到后端以获取验证码
+      this.$request.post('/sendVerifyCode', { phone: this.form.phone }).then(res => {
+        if (res.code === '200') {
+          this.$message.success('验证码已发送，请注意查收');
+        } else {
+          this.$message.error(res.msg);
+        }
+      });
+    },
     register() {
+      // 确保填写了验证码
+      if (!this.form.VerifyCode) {
+        this.$message.error('请输入验证码');
+        return;
+      }
       this.$refs['formRef'].validate((valid) => {
         if (valid) {
           // 验证通过
@@ -132,9 +178,12 @@ export default {
       // 使用哈希过的密码
       let hashedPassword = CryptoJS.SHA256(saltedPassword).toString();
       console.log("hashedPassword: "+hashedPassword)
+      console.log("phone"+this.form.phone)
       this.$request.post('/register', {
         username: this.form.username,
-        password: hashedPassword
+        password: hashedPassword,
+        phone: this.form.phone,
+        verifyCode: this.form.VerifyCode
       }).then(res => {
         if (res.code === '200') {
           this.$router.push('/login')  // 跳转登录页面
@@ -148,6 +197,16 @@ export default {
     closeSlideVerify() {
       this.slideVerifyShow = false;
     },
+    startTimer() {
+    //  计时器
+      const timer = setInterval(() => {
+        if (this.timeLeft > 0) {
+          this.timeLeft -= 1; // 每秒减少1
+        } else {
+          clearInterval(timer); // 当计时器达到0时清除
+        }
+      }, 1000);
+    }
   }
 }
 </script>
@@ -171,7 +230,7 @@ export default {
 }
 
 .logo {
-  width: 60%;
+  width: 30%;
   margin-top: 5%; /* 上边距 */
   margin-left: 5%; /* 左边距 */
 }
@@ -204,13 +263,14 @@ export default {
 }
 
 .register-box {
-  width: 50vh;
+  /*width: 50vh;*/
+  min-width: 360px;
   max-width: 500px;
   padding: 3rem 1.5rem;
   box-shadow: 0 1.5rem 6rem #e6e2ff;
   background-color: white;
-  border-radius: 4rem;
-  height: 60vh;
+  border-radius: 2rem;
+  /*height: 60vh;*/
   max-height: 800px;
   overflow: auto;
   min-height: 400px;
@@ -241,6 +301,10 @@ export default {
   border-radius:1.2rem;
   color: white;
 }
+.register-button:hover {
+  background-color: #0070ff;
+}
+
 
 .button-text {
   font-size:1.2rem;

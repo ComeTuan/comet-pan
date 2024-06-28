@@ -16,11 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * 网盘文件前端操作接口
- *
- * @author nomelin
- **/
+
 @RestController
 @RequestMapping("/files")
 public class FileController {
@@ -40,7 +36,7 @@ public class FileController {
         this.currentUserCache = currentUserCache;
     }
 
-
+//   创建文件夹
     @PostMapping("/folder")
     public Result addFolder(@RequestBody FileMeta fileMeta) {
         fileService.addFolder(fileMeta.getName(), fileMeta.getFolderId());
@@ -174,6 +170,16 @@ public class FileController {
         List<FileMeta> fileMetas = fileService.selectAll(fileMeta);
         return Result.success(fileMetas);
     }
+
+    @GetMapping("/selectAll")
+    public Result fileselectAll(FileMeta fileMeta,
+                            @RequestParam(defaultValue = "1") Integer pageNum,
+                            @RequestParam(defaultValue = "10") Integer pageSize) {
+//        PageInfo<FileMeta> page = fileService.selectPage(fileMeta, pageNum, pageSize);
+        List<FileMeta> fileMetas = fileService.selectAll(fileMeta);
+        return Result.success(fileMetas);
+    }
+
 
     @PostMapping("/share/batch")
     public Result selectShareBatch(@RequestBody List<Integer> ids) {

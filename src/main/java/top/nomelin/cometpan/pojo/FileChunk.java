@@ -129,5 +129,6 @@ public class FileChunk implements Serializable {
     public void setTargetFolderId(Integer targetFolderId) {
         this.targetFolderId = targetFolderId;
     }
+
 }
 

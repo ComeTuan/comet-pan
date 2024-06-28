@@ -11,13 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.nomelin.cometpan.cache.CurrentUserCache;
-import top.nomelin.cometpan.common.enums.CacheType;
 import top.nomelin.cometpan.common.enums.CodeMessage;
 import top.nomelin.cometpan.common.exception.BusinessException;
 import top.nomelin.cometpan.common.exception.SystemException;
-import top.nomelin.cometpan.dao.FileMapper;
-import top.nomelin.cometpan.dao.UserMapper;
-import top.nomelin.cometpan.interfaces.DoubleCache;
+import top.nomelin.cometpan.mapper.FileMapper;
+import top.nomelin.cometpan.mapper.UserMapper;
 import top.nomelin.cometpan.pojo.FileMeta;
 import top.nomelin.cometpan.pojo.User;
 import top.nomelin.cometpan.service.DiskService;
@@ -27,9 +25,7 @@ import top.nomelin.cometpan.util.Util;
 
 import java.util.*;
 
-/**
- * 网盘文件信息表业务处理
- **/
+
 @Service
 public class FileServiceImpl implements FileService {
     private final Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);

@@ -1,9 +1,11 @@
 package top.nomelin.cometpan.controller;
 
 
+import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import top.nomelin.cometpan.util.QiniuUtil;
 import top.nomelin.cometpan.common.Result;
 import top.nomelin.cometpan.pojo.FileChunk;
 import top.nomelin.cometpan.pojo.FileChunkResult;
@@ -26,6 +28,9 @@ public class UploaderController {
 
     private final DiskService diskService;
 
+    @Resource
+    QiniuUtil qiniuUtil;
+
     public UploaderController(UploaderService uploadService, FileService fileService, DiskService diskService) {
         this.uploadService = uploadService;
         this.fileService = fileService;
@@ -38,7 +43,6 @@ public class UploaderController {
     @GetMapping("/chunk")
     public Result checkChunkExist(FileChunk chunkDTO) {
         FileChunkResult fileChunkCheckDTO;
-
         fileChunkCheckDTO = uploadService.checkChunkExist(chunkDTO);
         return Result.success(fileChunkCheckDTO);
 
@@ -50,7 +54,6 @@ public class UploaderController {
      */
     @PostMapping("/chunk")
     public Result uploadChunk(FileChunk chunkDTO) throws IOException {
-
         uploadService.uploadChunk(chunkDTO);
         return Result.success(chunkDTO.getIdentifier());
 
@@ -69,6 +72,7 @@ public class UploaderController {
 
     }
 
+//    在文件系统中添加一个代表该文件的记录，无需实际上传文件数据 秒传
     @PostMapping("/instant")
     public Result instantUpload(@RequestBody InstantUploadDTO dto) {
         fileService.addFile(dto.getFilename(), dto.getTargetFolderId(),dto.getTotalSize(), dto.getDiskId());

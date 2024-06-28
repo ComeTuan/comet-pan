@@ -322,7 +322,7 @@ export default {
 
 .operation {
   /*position: absolute;*/
-  margin-left: 3%;
+  margin-left: 17px;
 }
 
 .name-container {

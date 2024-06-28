@@ -31,11 +31,13 @@ public class UserInterceptor implements HandlerInterceptor {
             throw new BusinessException(CodeMessage.ACCOUNT_CACHE_ERROR);
         }
         int role = currentUser.getRole();
+
         if (Role.USER.roleCode == role) {
             return true;
         } else if (Role.ADMIN.roleCode == role) {
-            logger.warn("用户+" + currentUser.getName() + "为管理员,此处仅限用户访问："+request.getRequestURI());
-            throw new BusinessException(CodeMessage.NEED_USER_ERROR);
+//            logger.warn("用户+" + currentUser.getName() + "为管理员,此处仅限用户访问："+request.getRequestURI());
+//            throw new BusinessException(CodeMessage.NEED_USER_ERROR);
+            return true;
         } else {
             throw new BusinessException(CodeMessage.UNKNOWN_ERROR);
         }

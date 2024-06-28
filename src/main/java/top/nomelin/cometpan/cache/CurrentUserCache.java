@@ -4,11 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import top.nomelin.cometpan.pojo.User;
 
-/**
- * 缓存当前用户信息
- *
- * @author nomelin
- */
+
 @Component
 @SessionScope
 public class CurrentUserCache {

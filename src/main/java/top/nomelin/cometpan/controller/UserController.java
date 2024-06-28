@@ -10,9 +10,7 @@ import top.nomelin.cometpan.service.UserService;
 
 import java.util.List;
 
-/**
- * 普通用户前端操作接口
- **/
+
 @RestController
 @RequestMapping("/users")
 public class UserController {

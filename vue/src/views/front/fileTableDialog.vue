@@ -4,10 +4,10 @@
     <div class="blur-background" v-if="dialogFilesVisible"></div>
     <el-dialog center class="dialog-files" :title="str" :visible.sync="dialogFilesVisible"
                :show-close="false" :close-on-click-modal="false" :close-on-press-escape="false">
-      <el-button type="primary" plain @click="backNavigationTemp" icon="el-icon-back"
-                 :disabled="cacheIndexTemp<=0"></el-button>
       <div class="path">
-        <span>全部文件</span><span>{{ this.pathTemp }} 共{{ this.totalTemp }}</span>
+        <el-button type="primary" plain @click="backNavigationTemp" icon="el-icon-back" class="navigation-button" circle
+                   :disabled="cacheIndexTemp<=0"></el-button>
+        <span style="margin-left: 3%">全部文件</span><span>{{ this.pathTemp }} 共<h style="color: #0d53ff">{{ this.totalTemp }}</h>个文件</span>
       </div>
       <el-table class="table-files" :data="filteredData" style="cursor: pointer;" height="50vh"
                 @row-click="handleFolderClickTemp" :default-sort="{prop: 'name', order: 'descending'}">>

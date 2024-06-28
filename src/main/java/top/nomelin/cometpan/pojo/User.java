@@ -3,19 +3,12 @@ package top.nomelin.cometpan.pojo;
 import com.fasterxml.jackson.annotation.JsonAlias;
 
 public class User extends Account {
-    private String phone;
+
     private String email;
     @JsonAlias({"used_space","usedspace"})
     private Long usedSpace;
     private Integer rootId;
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public String getEmail() {
         return email;
@@ -33,10 +26,10 @@ public class User extends Account {
         this.usedSpace = usedSpace;
     }
 
-    @Override
-    public String toString() {
-        return "User{" + super.toString() + ", phone='" + phone + '\'' + ", email='" + email + '\'' + ", usedSpace=" + usedSpace + ", rootId=" + rootId + '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "User{" + super.toString() + ", phone='" + phone + '\'' + ", email='" + email + '\'' + ", usedSpace=" + usedSpace + ", rootId=" + rootId + '}';
+//    }
 
     public Integer getRootId() {
         return rootId;

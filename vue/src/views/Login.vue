@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="header">
-      <img src="@/assets/imgs/logo.svg" alt="" class="logo">
+      <img src="@/assets/imgs/logo.png" alt="" class="logo">
     </div>
 
     <div class="main-content">
@@ -49,7 +49,7 @@
             </div>
           </el-form>
           <div class="temp">
-            测试账号用户名: 123, 密码: 123
+            测试账号用户名: tu1, 密码: 123456
           </div>
         </div>
 
@@ -194,7 +194,7 @@ export default {
 }
 
 .logo {
-  width: 60%;
+  width: 30%;
   margin-top: 5%; /* 上边距 */
   margin-left: 5%; /* 左边距 */
 }
@@ -217,13 +217,14 @@ export default {
 }
 
 .login-box {
-  width: 50vh;
+  /*width: 50vh;*/
+  min-width: 360px;
   max-width: 500px;
   padding: 3rem 1.5rem;
   box-shadow: 0 1.5rem 6rem #e6e2ff;
   background-color: white;
-  border-radius: 4rem;
-  height: 60vh;
+  border-radius: 2rem;
+  /*height: 60vh;*/
   max-height: 800px;
   min-height: 300px;
   overflow: auto;
@@ -251,7 +252,7 @@ export default {
   padding: 0.8rem; /* 输入框内边距 */
   border: 2px solid #dcdfe6; /* 自定义输入框的边框 */
   border-radius: 1.2rem; /* 自定义输入框的边框圆角 */
-  height: 4rem; /* 自定义输入框的高度 */
+  /*height: 4rem; !* 自定义输入框的高度 *!*/
   min-height: 50px;
 }
 

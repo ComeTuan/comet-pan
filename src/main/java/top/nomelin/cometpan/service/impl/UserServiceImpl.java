@@ -3,10 +3,12 @@ package top.nomelin.cometpan.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.aspectj.apache.bcel.classfile.CodeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.nomelin.cometpan.common.Constants;
@@ -14,8 +16,8 @@ import top.nomelin.cometpan.common.enums.CacheType;
 import top.nomelin.cometpan.common.enums.CodeMessage;
 import top.nomelin.cometpan.common.enums.Role;
 import top.nomelin.cometpan.common.exception.BusinessException;
-import top.nomelin.cometpan.dao.FileMapper;
-import top.nomelin.cometpan.dao.UserMapper;
+import top.nomelin.cometpan.mapper.FileMapper;
+import top.nomelin.cometpan.mapper.UserMapper;
 import top.nomelin.cometpan.interfaces.DoubleCache;
 import top.nomelin.cometpan.pojo.Account;
 import top.nomelin.cometpan.pojo.User;
@@ -25,9 +27,7 @@ import top.nomelin.cometpan.util.TokenUtil;
 
 import java.util.List;
 
-/**
- * @author nomelin
- */
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -152,16 +152,29 @@ public class UserServiceImpl implements UserService {
         return dbUser;
     }
 
-
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
     /**
      * 注册
      */
     @Override
     public User register(Account account) {
-        User user = new User();
-        BeanUtils.copyProperties(account, user);
-        int id = add(user);
-        return selectById(id);
+        // 获取用户输入的验证码
+        String inputCode = account.getVerifyCode();
+        // 从Redis中获取存储的验证码
+        String storedCode = (String) redisTemplate.opsForValue().get("verificationCode:" + account.getPhone());
+        System.out.println("验证码为："+storedCode);
+        // 检查验证码是否一致
+        if (inputCode != null && inputCode.equals(storedCode)) {
+            // 验证码一致，继续注册流程
+            User user = new User();
+            BeanUtils.copyProperties(account, user);
+            int id = add(user);
+            return selectById(id);
+        } else {
+            // 验证码不一致，返回错误
+            throw new BusinessException(CodeMessage.VERIFICATION_CODE_ERROR);
+        }
     }
 
     /**

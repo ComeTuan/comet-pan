@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.nomelin.cometpan.mapper.NoticeMapper">
+
+    <!-- 查询所有公告（带条件查询） -->
+    <select id="selectAll" resultType="top.nomelin.cometpan.pojo.Notice">
+        select
+        id, title, content, time, userId
+        from notice
+        <where>
+            <if test="id != null">and id = #{id}</if>
+            <if test="title != null">and title like CONCAT('%', #{title}, '%')</if>
+            <if test="content != null">and content like CONCAT('%', #{content}, '%')</if>
+            <if test="time != null">and time = #{time}</if>
+            <if test="userId != null">and userId = #{userId}</if>
+        </where>
+    </select>
+
+    <!-- 新增公告 -->
+    <insert id="insert" parameterType="top.nomelin.cometpan.pojo.Notice" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into notice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="content != null">content,</if>
+            <if test="time != null">time,</if>
+            <if test="userId != null">userId,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="content != null">#{content},</if>
+            <if test="time != null">#{time},</if>
+            <if test="userId != null">#{userId},</if>
+        </trim>
+    </insert>
+
+    <!-- 修改公告 -->
+    <update id="updateById" parameterType="top.nomelin.cometpan.pojo.Notice">
+        update notice
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="time != null">time = #{time},</if>
+            <if test="userId != null">userId = #{userId},</if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

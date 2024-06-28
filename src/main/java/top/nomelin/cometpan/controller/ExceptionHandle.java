@@ -9,9 +9,7 @@ import top.nomelin.cometpan.common.enums.CodeMessage;
 import top.nomelin.cometpan.common.exception.BusinessException;
 import top.nomelin.cometpan.common.exception.SystemException;
 
-/**
- * @author nomelin
- */
+
 @RestControllerAdvice
 public class ExceptionHandle {
     private final Logger logger = LoggerFactory.getLogger(ExceptionHandle.class);

@@ -23,11 +23,7 @@ import top.nomelin.cometpan.common.exception.BusinessException;
 import top.nomelin.cometpan.pojo.User;
 import top.nomelin.cometpan.service.UserService;
 
-/**
- * 验证token的拦截器
- *
- * @author nomelin
- */
+
 @Component
 public class TokenInterceptor implements HandlerInterceptor {
 

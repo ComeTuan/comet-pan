@@ -8,12 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * CaffeineConfig
- *
- * @author nomelin
- * @since 2024/05/19 10:30
- **/
+
 @Configuration
 public class CaffeineConfig {
     @Value("${cache.l1.max-size:1024}")

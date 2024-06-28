@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.transaction.annotation.Transactional;
 import top.nomelin.cometpan.pojo.FileMeta;
 
+import java.io.File;
 import java.util.List;
 
 public interface FileService {
@@ -129,6 +130,7 @@ public interface FileService {
      * 根据ID查询
      */
     FileMeta selectById(Integer id);
+
 
     /**
      * 查询所有

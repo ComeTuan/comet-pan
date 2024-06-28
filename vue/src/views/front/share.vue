@@ -8,7 +8,7 @@
     </div>
     <div class="blank"></div>
     <div class="path">
-      <span>我的分享></span><span>共{{ this.total }}</span>
+      <span>我的分享></span><span>共<h style="color: #0d53ff">{{ this.total }}</h>个文件</span>
     </div>
     <div class="table">
       <!-- 使用 v-if 控制 el-skeleton 的显示与隐藏 -->
@@ -32,7 +32,8 @@
         <el-table-column label="分享链接" show-overflow-tooltip min-width="400">
           <template v-slot="scope">
             <!-- 使用自定义渲染函数，将路径加上固定前缀 -->
-            <span>{{ 'https://pan.nomelin.top/share/' + scope.row.path }}</span>
+<!--            <span>{{ 'https://cometuan.space/share/' + scope.row.path }}</span>-->
+            <span>{{ 'http://localhost:443/share/' + scope.row.path }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="days" label="剩余时间" show-overflow-tooltip></el-table-column>
@@ -214,7 +215,7 @@ export default {
     //   return this.$options.filters.sizeFormat(row[column.property]);
     // },
     copyToClipboard(row) {
-      navigator.clipboard.writeText('https://pan.nomelin.top/share/' + row.path);
+      navigator.clipboard.writeText('https://localhost:443/share/' + row.path);
       this.$message.success('复制成功,快分享给其它人吧！')
     }
   }
@@ -229,7 +230,7 @@ export default {
 
 .operation {
   /*position: absolute;*/
-  margin-left: 3%;
+  margin-left: 2%;
 }
 
 ::v-deep .highlight {

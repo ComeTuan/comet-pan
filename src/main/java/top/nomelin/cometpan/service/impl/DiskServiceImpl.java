@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import top.nomelin.cometpan.common.enums.CodeMessage;
 import top.nomelin.cometpan.common.exception.BusinessException;
-import top.nomelin.cometpan.dao.DiskMapper;
+import top.nomelin.cometpan.mapper.DiskMapper;
 import top.nomelin.cometpan.pojo.DiskFile;
 import top.nomelin.cometpan.service.DiskService;
 import top.nomelin.cometpan.util.Util;
@@ -114,4 +114,8 @@ public class DiskServiceImpl implements DiskService {
         return false;
     }
 
+    @Override
+    public String getDiskUrl(int diskId) {
+        return diskMapper.selectById(diskId).getPath();
+    }
 }

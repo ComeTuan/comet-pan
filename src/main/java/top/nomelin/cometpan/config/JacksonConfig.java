@@ -6,12 +6,7 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * JacksonConfig
- *
- * @author nomelin
- * @since 2024/05/19 12:13
- **/
+
 @Configuration
 public class JacksonConfig {
 

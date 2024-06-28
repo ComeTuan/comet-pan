@@ -2,9 +2,7 @@ package top.nomelin.cometpan.common;
 
 import top.nomelin.cometpan.common.enums.CodeMessage;
 
-/**
- * @author nomelin
- */
+
 public class Result {
     private String code;
     private String msg;
